@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>菜鸟教程(runoob.com)</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+    <body>
+        <div class="resultData">
+
+        </div>
+
+        <a href="javascript:void(0)" type="button" onclick="sendData()">发送消息到服务器</a>
+    </body>
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+    //ws连接
+    var ws;
+    $(function(){
+        if ("WebSocket" in window) {
+            console.log("您的浏览器支持 WebSocket!");
+        }else{
+            alert("您的浏览器不支持 WebSocket!");
+            return false;
+        }
+        ws = new WebSocket("ws://localhost:8282");
+
+        ws.onmessage = function(evt){
+            var received_msg = evt.data;
+            html = "<p>"+received_msg+"</p>";
+            $('.resultData').append(html);
+            console.log("数据已接收..."+received_msg);
+        }
+    });
+
+    function sendData(){
+        // Web Socket 已连接上，使用 send() 方法发送数据
+        ws.send("来自js脚本发送数据");
+        console.log("数据发送中...");
+    }
+
+
+
+
+</script>
+
+
+</html>
